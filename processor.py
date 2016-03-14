@@ -27,22 +27,27 @@ class Processor:
             queued_op = self.ops_queue.get(op_id)
             if queued_op:
                 self.process_symbol_total(queued_op[0], op_qty)
-                del self.ops_queue[op_id]
+                if op_qty < queued_op[1]:
+                    self.ops_queue[op_id] = (self.ops_queue[op_id][0], self.ops_queue[op_id][1] - op_qty,)
+                elif op_qty == queued_op[1]:
+                    del self.ops_queue[op_id]
 
         # for Order Traded
         if op_type == "P":
+            op_trans = operation[21:22]
             op_qty = int(operation[22:28])
-            queued_op = self.ops_queue.get(op_id)
-            if queued_op:
-                self.process_symbol_total(queued_op[0], op_qty)
-                del self.ops_queue[op_id]
+            op_symbol = operation[28:33].strip()
+            self.process_symbol_total(op_symbol, op_qty)
 
         # for Order Cancelled
         if op_type == "X":
             op_qty = int(operation[21:27])
             queued_op = self.ops_queue.get(op_id)
             if queued_op:
-                del self.ops_queue[op_id]
+                if op_qty < queued_op[1]:
+                    self.ops_queue[op_id] =  (self.ops_queue[op_id][0], self.ops_queue[op_id][1] - op_qty,)
+                elif op_qty == queued_op[1]:
+                    del self.ops_queue[op_id]
 
     def process_symbol_total(self, symbol, qty):
         total_shares = self.top_symbols.get(symbol)

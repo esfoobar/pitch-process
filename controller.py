@@ -21,4 +21,4 @@ def terminal_input():
         pitch.print_top_symbols()
 
 if __name__ == "__main__":
-    terminal_input()
+    ingest_file()
