@@ -23,5 +23,5 @@ def terminal_input():
         pitch.print_top_symbols()
 
 if __name__ == "__main__":
-    if sys.argv and sys.argv[1]:
+    if len(sys.argv) > 1:
         ingest_file(sys.argv[1])
