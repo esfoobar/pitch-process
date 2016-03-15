@@ -1,9 +1,11 @@
+import sys
+
 from processor import Processor
 
-def ingest_file():
+def ingest_file(file):
     pitch = Processor()
     i = 0
-    with open("data/pitch_example_data") as f:
+    with open(file) as f:
         content = f.readlines()
         for line in content:
             pitch.parse(line)
@@ -21,4 +23,5 @@ def terminal_input():
         pitch.print_top_symbols()
 
 if __name__ == "__main__":
-    ingest_file()
+    if sys.argv and sys.argv[1]:
+        ingest_file(sys.argv[1])
