@@ -18,12 +18,12 @@ class Processor:
         if op_type == "A":
             op_trans = operation[21:22]
             op_qty = int(operation[22:28])
-            op_symbol = operation[28:33].strip()
+            op_symbol = operation[28:34].strip()
             self.ops_queue[op_id] = (op_symbol, op_qty,)
             
         # for Order Executed
         if op_type == "E":
-            op_qty = int(operation[22:28])
+            op_qty = int(operation[21:27])
             queued_op = self.ops_queue.get(op_id)
             if queued_op:
                 self.process_symbol_total(queued_op[0], op_qty)
@@ -36,7 +36,7 @@ class Processor:
         if op_type == "P":
             op_trans = operation[21:22]
             op_qty = int(operation[22:28])
-            op_symbol = operation[28:33].strip()
+            op_symbol = operation[28:34].strip()
             self.process_symbol_total(op_symbol, op_qty)
 
         # for Order Cancelled
@@ -58,7 +58,7 @@ class Processor:
         
     def print_top_symbols(self):
         sorted_symbols = sorted(self.top_symbols.items(), key=operator.itemgetter(1), reverse=True)
-        for symbol in sorted_symbols:
+        for symbol in sorted_symbols[0:10]:
             print(symbol[0].ljust(8), " ", str(symbol[1]).rjust(8))
             
         

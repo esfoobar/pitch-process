@@ -13,8 +13,8 @@ class ProcessorTestCase(unittest.TestCase):
         self.shares2 = "000200"
         self.shares3 = "000300"
         self.shares4 = "000400"
-        self.stock_symbol = "AAPL    "
-        self.stock_symbol4 = "GOOG    "
+        self.stock_symbol = "AAPL  "
+        self.stock_symbol4 = "GOOG  "
         
     def add_op1(self):
         add_op = self.op_timestamp + "A" + self.op_orderid + "B" + self.shares + self.stock_symbol
